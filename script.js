@@ -72,7 +72,7 @@ if (choix === "mots"){
 
 
 
-
+console.log("youpi")
 // const arr = ["oui","non","maybe"]
 
 
