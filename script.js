@@ -1,93 +1,53 @@
-/**l'appli propose un mot
- * l'utilisateur écrit ce mot
- * 
- * SI le mot écrit par l'utlisateur = le mot porposé par l'appli
- ALORS ajout d'un point
 
-*/
-// let motTapeOk = true
-
-// if (motTapeOk) {
-//     console.log("Bravo, vous avez correctement tapé le mot ")
-// } else {
-//     console.log("Echec, le mot n'est pas correct")
-// }
-// const motApplication = "Bonjour" // Essayez de mettre un autre mot ici !
-// let motUtilisateur = prompt("Entrez le mot : " + motApplication)
-
-// if (motUtilisateur === motApplication) {
-//     console.log("Bravo !")
-// } else {
-//     console.log("Vous avez fait une erreur de frappe.")
-// }
-
-
-// let motUtilisateur = prompt("Entrez le mot : " + listeMots[0])
-// if (motUtilisateur === listeMots[0]){
-//     score ++
-//     console.log(score)
-// }
-
-// motUtilisateur = prompt("Entrez le mot : " + listeMots[1])
-// if (motUtilisateur === listeMots[1]){
-//     score ++
-//     console.log(score)
-// }
-
-// motUtilisateur = prompt("Entrez le mot : " + listeMots[2])
-// if (motUtilisateur === listeMots[2]){
-//     score ++
-//     console.log(score)
-// }
-
-let listeMots = ["Cachalot", "Pétunia", "Serviette"]
-let listPhrase = ["Pas de panique !", "La vie, l’univers et le reste", "Merci pour le poisson"]
-
+/*
+créer un bouton "commencer"
+quand on clique sur commencer la boucle se met en route
+*/ 
+let listeMots = ["Raiden", "Nilou", "Ganyu", "Zhongli", "Ayaka", "Alhaitham", "Yoimiya", "Nahida", "Furina"]
 let score = 0
+let wordHint = document.getElementById("wordHint")
+let rand = Math.floor(Math.random() * listeMots.length)
+let wordRandom = listeMots[rand]
+let userScore = document.getElementById("userScore")
 
-let choix = prompt("Avec quelle liste désirez-vous jouer : 'mots' ou 'phrases' ?")
-while (choix !== "mots" && choix !== "phrases") {
-    choix = prompt("Avec quelle liste désirez-vous jouer : 'mots' ou 'phrases' ?")
+// Fonction pour choisir un nouveau mot aléatoire
+function newWord() {
+    let rand = Math.floor(Math.random() * listeMots.length);
+    return listeMots[rand];
 }
 
-if (choix === "mots"){
-
-    for (let mot = 0; mot < listeMots.length; mot++){
-        let motUtilisateur = prompt("Entrez le mot : " + listeMots[mot])
-        if (motUtilisateur === listeMots[mot]){
-            score ++
-        }
-    }
-    console.log("Votre score est de " + score + " sur " + listeMots.length)
-}else {
-
-    for (let phrase = 0; phrase < listPhrase.length; phrase++){
-    let phraseUtilisateur = prompt("Entrez la phrase : " + listPhrase[phrase])
-    if ( phraseUtilisateur === listPhrase[phrase]){
-        score++
-        }
-    }
-    console.log("Votre score est de " + score + " sur " + listePhrases.length)
+function updateScore() {
+    userScore.innerText = `Votre Score: ${score}`;
 }
 
+document.querySelector("form").addEventListener("submit", (e) =>{
+    e.preventDefault()
+    const form = e.currentTarget
+    const data = new FormData(form)
+    let userInput = data.get("text") 
+    
+    if (userInput === wordRandom){
+            score ++    
+            userScore.innerText = `Votre Score: ${score}`
+            window.alert("Bravo!")
+            form.reset() //Réinitialiser le formulaire
+            wordRandom = newWord() //Génère un nouveau mot aléatoire
+            wordHint.innerHTML = `Entrez le mot suivant: ${wordRandom}`
+    //    for (score = 0; score <listeMots.length; score++){
+    //     wordHint.innerText = `Entrez le mot suivant: ${wordRandom}`
+    //    }    
+    }else {
+            window.alert("Réessayez")
+            form.reset()
+    }
+    
+})
 
-
-console.log("youpi")
-// const arr = ["oui","non","maybe"]
-
-
-// arr.forEach( value => { 
-//     console.log(value)
-// })
-
-// for(let i of arr){
-//     console.log(i)
-// }
-
-// objectName.propertyName
-// //or
-// objectName['propertyName']
-// // exemple:
-
-// monPersonnage.age
-// monPersonnage['age']
+document.querySelector("#start").addEventListener("click", (e) => {
+    score = 0 // Réinitialiser le score
+    updateScore()
+    window.alert("C'est parti!")
+    wordRandom = newWord(); // Choisir un nouveau mot aléatoire
+    wordHint.innerText = `Entrez le mot suivant: ${wordRandom}`
+    // document.querySelector("form").reset() // Réinitialiser le formulaire pour vider le champ
+})
