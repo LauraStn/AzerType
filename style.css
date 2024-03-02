@@ -1,0 +1,18 @@
+body {
+    background-color: darksalmon;
+    color: black;
+}
+
+h1 {
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+button,
+#send  {
+    width: 100px;
+}
